@@ -78,7 +78,7 @@ const Tab1: React.FC = () => {
             })
           ) : (
             <IonItem>
-              <IonLabel>This is a test</IonLabel>
+              <IonLabel>You have yet to add tasks for today</IonLabel>
             </IonItem>
           )}
         </IonList>
