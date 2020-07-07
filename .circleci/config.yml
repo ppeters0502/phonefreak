@@ -21,3 +21,25 @@ jobs:
       - run:
           name: test
           command: npm run test
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - add_ssh_keys:
+        fingerprints:
+          - "$DEV_SSH_KEY_FINGERPRINT"
+      - run:
+        name: Deploy over SSH
+        command: |
+          ssh $SSH_USER@$DEV_HOST "git pull origin master || npm run-script build || serve -s build"
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            - branches:
+              only: master
