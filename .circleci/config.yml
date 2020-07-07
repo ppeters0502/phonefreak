@@ -32,7 +32,7 @@
             name: Deploy over SSH
             command: |
               ssh $SSH_USER@$DEV_HOST "cd ./phonefreak && git pull origin master && echo \$PWD"
-              ssh $SSH_USER@$DEV_HOST "cd ./phonefreak && npm run-script build && serve -s build"
+              ssh $SSH_USER@$DEV_HOST "cd ./phonefreak && npm install && npm run-script build && serve -s build"
   workflows:
    version: 2
    build-and-deploy:
