@@ -32,14 +32,14 @@ jobs:
           name: Deploy over SSH
           command: |
             ssh $SSH_USER@$DEV_HOST "git pull origin master || npm run-script build || serve -s build"
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            - branches:
-              only: master
+ workflows:
+   version: 2
+   build-and-deploy:
+     jobs:
+       - build
+       - deploy:
+           requires:
+             - build # only deploy once build job has completed
+           filters:
+             branches:
+               only: master # only deploy on the master branch
