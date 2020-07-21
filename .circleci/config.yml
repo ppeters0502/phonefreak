@@ -21,26 +21,3 @@
         - run:
             name: test
             command: npm run test
-    deploy:
-      machine:
-        enabled: true
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "$DEV_SSH_KEY_FINGERPRINT"
-        - run:
-            name: Deploy over SSH
-            command: |
-              ssh $SSH_USER@$DEV_HOST "cd ./phonefreak && git pull origin master && echo \$PWD"
-              ssh $SSH_USER@$DEV_HOST "cd ./phonefreak && npm run-script build && serve -s build"
-  workflows:
-   version: 2
-   build-and-deploy:
-     jobs:
-       - build
-       - deploy:
-           requires:
-             - build # only deploy once build job has completed
-           filters:
-             branches:
-               only: master # only deploy on the master branch
